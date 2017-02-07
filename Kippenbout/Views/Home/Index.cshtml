@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<div class="jumbotron ">
+    <div class="row">
+        <div class="col-md-9">
+            <h1>Le Kippenbout</h1>
+            <p class="lead">Welkom bij het reserveringssysteem van Le Kippenbout!</p>
+        </div>
+        <div class="col-md-3">
+            <img src="~/Images/Chicken.jpg" width=150 height=150 />
+        </div>
+    </div>
+
+</div>
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <p>
+        Welkom bij Le Kippenbout!
+        Om te reserveren heeft u bij ons eerst een account nodig.
+    </p>
+
+        <button class="btn btn-default">
+            @Html.ActionLink("Klik hier om een account te maken!", "Register", "Account")
+        </button>
+    <button class="btn btn-default">
+        @Html.ActionLink("Of log in", "Login", "Account")
+    </button>
+    
+}
+
+
+
+
+@*@if (User.IsInRole("Admin"))
+{
+    <div class="row">
+        <h2>Le Kippenbout's Admin panel</h2>
+        <div class="col-md-Test boxes">
+            <h2 class="tekst-color">Rechten aanmaken</h2>
+            <p>
+                Bij Le Kippenbout hebben we een eigen online Rechtensysteem. Klik op de knop om te om rechten aan te maken die je later aan mensen kan toewijzen.
+            </p>
+            <p><a class="btn btn-default" href="http://localhost:56721/account/RoleCreate">Aanmaken &raquo;</a></p>
+        </div>
+        <div class="col-md-Test boxes">
+            <h2 class="tekst-color">Rechten overzicht</h2>
+            <p>Hier kunt u bekijken welke Rechten aangemaakt zijn. Een heel simpel overzicht van alle rechten die aan mensen toegewezen kan worden.</p>
+            <p><a class="btn btn-default" href="http://localhost:56721/">Overzicht &raquo;</a></p>
+        </div>
+        <div class="col-md-Test boxes">
+            <h2 class="tekst-color">Rechten Koppelen</h2>
+            <p>Heeft het restaurant een nieuwe medewerker, kok of zelfs een nieuwe eigenaar? Klik hier om rechten te koppelen aan nieuwe gebruikers.</p>
+            <p><a class="btn btn-default" href="http://localhost:56721/Manage/Show">Koppelen &raquo;</a></p>
+        </div>
+    </div>
+}*@    
+
+
+
+@if (User.IsInRole("Admin") || User.IsInRole("User"))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <h2 class="tekst-color">Reserveren</h2>
+            <p>
+                Bij Le Kippenbout hebben we een eigen online reserveringssysteem. Klik op de knop hieronder om te reserveren!
+            </p>
+            <p><a class="btn btn-default" href="http://localhost:56721/reserveren">Reserveren &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="tekst-color">Onze menukaart</h2>
+            <p>Hier kunt u bekijken welke menu's wij aanbieden. Zit uw favoriete gerecht er niet bij? Neem contact op met met ons!</p>
+            <p><a class="btn btn-default" href="http://localhost:56721/MenusList">Menu's &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2 class="tekst-color">Uw account</h2>
+            <p>Kloppen uw gegevens niet? Hier kunt u uw gegevens aanpassen.</p>
+            <p><a class="btn btn-default" href="http://localhost:56721/Manage/Show">Mijn Account &raquo;</a></p>
+        </div>
+    </div>
+
+}

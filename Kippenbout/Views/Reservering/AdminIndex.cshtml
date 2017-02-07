@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Kippenbout.Models.Reservering>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Reserveringen</h2>
+
+
+<p>
+    @Html.ActionLink("Maak een reservering aan", "Create")
+</p>
+<table class="table">
+    <tr>
+        
+        <th>
+            Contactpersoon
+        </th>
+        <th>
+            Telefoonnummer
+        </th>
+        <th>
+            Aantal personen
+        </th>
+        <th>
+            Tafel Nummer
+        </th>
+        <th>
+            Datum
+        </th>
+        <th>
+           Totaal Prijs
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contact_Naam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contact_Telefoonnummer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Personen)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tafel_Nummer)
+        </td>
+        <td>
+            @{
+                var active2 = item.BeginDatum_tijd;
+            }
+            @Html.DisplayFor(modelItem => active2)
+        </td>
+        <td>
+            &euro; @Html.DisplayFor(modelItem => item.Prijs)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+            @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+            @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+        </td>
+        
+    </tr>
+}
+</table>

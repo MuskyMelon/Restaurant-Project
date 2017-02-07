@@ -1,0 +1,23 @@
+﻿@model Kippenbout.Models.UserInfo
+
+@{
+    ViewBag.Title = "Uw gegevens";
+}
+
+<h2>Uw gegevens</h2>
+
+<hr />
+
+<h3>Naam: @Model.Voornaam @Model.Tussenvoegsel @Model.Achternaam</h3>
+
+<a href="@Url.Action("Update", "Manage")" class="btn btn-primary">
+    Gegevens aanpassen
+</a>
+
+<br />
+<br />
+
+<a href="@Url.Action("ChangePassword", "Manage")" class="btn btn-danger">
+    Wachtwoord wijzigen
+</a>
+

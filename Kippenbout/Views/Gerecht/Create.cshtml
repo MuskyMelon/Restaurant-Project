@@ -1,0 +1,72 @@
+﻿@model Kippenbout.Models.Gerecht
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Gerechten aanmaken</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">Gerecht: </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Naam, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Naam, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Soort gerecht: </label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Soort, new SelectList (
+                new List<object>
+                    {
+                    new { value = "Voorgerecht" , text = "Voorgerecht"  },
+                    new { value = "Hoofdgerecht" , text = "Hoofdgerecht" },
+                    new { value = "Nagerecht" , text = "Nagerecht"}
+                    },
+               "value",
+               "text",
+               2),new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Soort, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Omschrijving: </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Omschrijving, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Omschrijving, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Prijs: </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Prijs, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Prijs, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

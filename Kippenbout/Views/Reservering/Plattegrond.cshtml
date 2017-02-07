@@ -1,0 +1,143 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Plattegrond";
+    <style>
+        Canvas {
+            margin-top: 4px;
+            background-image: url('../../Images/Achtergrond.png');
+        }
+    </style>
+
+
+    <canvas id="Canvas" width="942" height="600" style="border: 1px solid #000000;">
+        Your browser does not support the HTML5 Canvas tag.
+    </canvas>
+
+    <script>
+        var contains = function (needle) {
+            // Per spec, the way to identify NaN is that it is not equal to itself
+            var findNaN = needle !== needle;
+            var indexOf;
+
+            if (!findNaN && typeof Array.prototype.indexOf === 'function') {
+                indexOf = Array.prototype.indexOf;
+            } else {
+                indexOf = function (needle) {
+                    var i = -1, index = -1;
+
+                    for (i = 0; i < this.length; i++) {
+                        var item = this[i];
+
+                        if ((findNaN && item !== item) || item === needle) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    return index;
+                };
+            }
+
+            return indexOf.call(this, needle) > -1;
+        };
+
+        Array.prototype.remove = function () {
+            var what, a = arguments, L = a.length, ax;
+            while (L && this.length) {
+                what = a[--L];
+                while ((ax = this.indexOf(what)) !== -1) {
+                    this.splice(ax, 1);
+                }
+            }
+            return this;
+        };
+    </script>
+
+    <script>
+        var c = document.getElementById("Canvas");
+        var ctx = c.getContext("2d");
+
+        var clickedTables = [];
+
+        var Tafels = [
+            [40, 54, 1],
+            [40, 204, 2], 
+            [40, 490, 3],
+            [40, 354, 4],
+            [250, 204, 5],
+            [250, 354, 6],
+            [500, 54, 7],
+            [500, 204, 8],
+            [719, 54, 9],
+            [719, 204, 10]
+        ];
+
+        function drawTable(table, x, y) {
+            table.onload = function () { ctx.drawImage(table, x, y) };
+        }
+
+        function drawMap() {
+
+            ctx.clearRect(0, 0, ctx.width, ctx.height);
+
+            for (var i = 0; i < Tafels.length; i++) {
+                var tafel = new Image();
+                var x = Tafels[i][0];
+                var y = Tafels[i][1];
+
+                tafel.Id = Tafels[i][2];
+
+                if (contains.call(clickedTables, i)) {
+                    tafel.src = '/Images/Tafel_Z.png';
+                } else {
+                    tafel.src = '/Images/Tafel_0.png';
+                }
+
+                drawTable(tafel, x, y);
+            }
+
+            //console.log(clickedTables);
+
+        }
+
+        c.addEventListener('click',
+            function (event) {
+                var x = event.pageX - c.offsetLeft,
+                    y = event.pageY - c.offsetTop;
+
+
+                for (var i = 0; i < Tafels.length; i++) {
+                    var tx = Tafels[i][0];
+                    var ty = Tafels[i][1];
+
+                    if (x >= tx && x <= tx + 180 && y >= ty && y <= ty + 100) {
+
+                        if (clickedTables.length) {
+                            clickedTables = [];
+                        }
+
+                        if (!contains.call(clickedTables, i)) {
+                            clickedTables.push(i);
+                        } else {
+                            clickedTables.remove(i);
+                        }
+
+                        drawMap();
+                    }
+
+                }
+
+
+            });
+
+        drawMap();
+
+
+    </script>
+    <body>
+    </body>
+
+
+}
+
+

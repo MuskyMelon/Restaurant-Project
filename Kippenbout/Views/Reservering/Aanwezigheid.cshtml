@@ -1,0 +1,58 @@
+﻿@model IEnumerable<Kippenbout.Models.Reservering>
+
+@{
+    ViewBag.Title = "Aanwezigheid";
+}
+
+<h2>Aanwezigheid</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Contact_Naam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Personen)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Datum)
+        </th>
+        <th>
+            Prijs
+        </th>
+        <th>
+            Aanwezig
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Contact_Naam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Personen)
+            </td>
+            <td>
+                @{
+                    var active2 = item.Datum;
+                }
+                @Html.DisplayFor(modelItem => active2)
+            </td>
+
+            <td>
+                &euro;  @Html.DisplayFor(modelItem => item.Menu.Prijs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aanwezig)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "AanwezigheidDetail", new { id = item.Id })
+            </td>
+
+        </tr>
+    }
+
+</table>

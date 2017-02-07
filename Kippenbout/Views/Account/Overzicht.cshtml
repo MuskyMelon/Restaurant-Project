@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Kippenbout.Models.UserInfo>
+
+@{
+    ViewBag.Title = "Overzicht";
+}
+
+<h2>Overzicht</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Voornaam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tussenvoegsel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Achternaam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Plaats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Straatnaam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Huisnummer)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Toevoegsel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Postcode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Geboortedatum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Voornaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tussenvoegsel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Achternaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Plaats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Straatnaam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Huisnummer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Toevoegsel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Postcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Geboortedatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+        </tr>
+    }
+
+</table>

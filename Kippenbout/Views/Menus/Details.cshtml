@@ -1,0 +1,111 @@
+﻿@model Kippenbout.Models.Menu
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h3>Menu</h3>
+    <hr />
+    <h4>Menu info</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Naam)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Naam)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Prijs)
+        </dt>
+
+        <dd>
+            &euro; @Html.DisplayFor(model => model.Prijs)
+        </dd>
+    </dl>
+    <h4>Voorgerecht</h4>
+    <dl class="dl-horizontal">
+        <dt>
+           Naam
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Voorgerecht.Naam)
+        </dd>
+
+        <dt>
+            Omschrijving
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Voorgerecht.Omschrijving)
+        </dd>
+
+        <dt>
+            Prijs
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Voorgerecht.Prijs)
+        </dd>
+    </dl>
+    <h4>Hoofdgerecht</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            Naam
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hoofdgerecht.Naam)
+        </dd>
+
+        <dt>
+            Omschrijving
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hoofdgerecht.Omschrijving)
+        </dd>
+
+        <dt>
+            Prijs
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hoofdgerecht.Prijs)
+        </dd>
+    </dl>
+    <h4>Nagerecht</h4>
+    <dl class="dl-horizontal">
+        <dt>
+            Naam
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nagerecht.Naam)
+        </dd>
+
+        <dt>
+            Omschrijving
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nagerecht.Omschrijving)
+        </dd>
+
+        <dt>
+            Prijs
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nagerecht.Prijs)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

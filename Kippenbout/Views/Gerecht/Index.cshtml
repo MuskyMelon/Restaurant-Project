@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Kippenbout.Models.Gerecht>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Gerechten overzicht</h2>
+
+<p>
+    @Html.ActionLink("Gerecht aanmaken", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Naam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Soort)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Omschrijving)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prijs)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Naam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Soort)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Omschrijving)
+        </td>
+        <td>
+            &euro;  @Html.DisplayFor(modelItem => item.Prijs)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+@if (User.IsInRole("Admin"))
+{
+<p>
+
+    <a href="@Url.Action("ExportToExcel", "Gerecht")" class="btn">
+        <span class="download fa fa-download"></span>
+    </a>
+    @*<button class="btn btn-default kleurtje">
+        @Html.ActionLink("Klik hier om een dataexport te maken naar Excel", "ExportToExcel")
+    </button>*@
+    
+
+
+    <a href="@Url.Action("ExportToCSV", "Gerecht")" class="btn">
+        <span class="download fa fa-file"></span>
+    </a>
+
+</p>
+}
+
+

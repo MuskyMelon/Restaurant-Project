@@ -1,0 +1,292 @@
+﻿@model Kippenbout.Models.ReserveringViewModel
+
+
+@{
+    ViewBag.Title = "Create";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#Personen").change(function () {
+            var i = $("#Personen :selected").val();
+            var str = "";
+            for (var j = 1; j <= i; j++) {
+                var id = "txtCustomer" + j;
+                //Remember to add name attribute to get values at server side
+
+                str = str + "<span>Customer " + j + " Full Name: </span><input type='text' id='" + id + "' name='" + id + "'/><br/>";
+            }
+            $("#content").html(str);
+        });
+    });
+</script>
+
+<h2>Maak een reservering aan</h2>
+<hr />
+
+@{
+
+    if (Model.Personen > 0)
+    {
+    <style>
+        Canvas {
+            margin: 4px 0 20px;
+            background-image: url('../../Images/Achtergrond.png');
+           
+        }
+    </style>
+        <canvas id="Canvas" width="942" height="600" style="border: 1px solid #000000;">
+            Your browser does not support the HTML5 Canvas tag.
+        </canvas>
+
+    <script>
+        var contains = function (needle) {
+            // Per spec, the way to identify NaN is that it is not equal to itself
+            var findNaN = needle !== needle;
+            var indexOf;
+
+            if (!findNaN && typeof Array.prototype.indexOf === 'function') {
+                indexOf = Array.prototype.indexOf;
+            } else {
+                indexOf = function (needle) {
+                    var i = -1, index = -1;
+
+                    for (i = 0; i < this.length; i++) {
+                        var item = this[i];
+
+                        if ((findNaN && item !== item) || item === needle) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    return index;
+                };
+            }
+
+            return indexOf.call(this, needle) > -1;
+        };
+
+        Array.prototype.remove = function () {
+            var what, a = arguments, L = a.length, ax;
+            while (L && this.length) {
+                what = a[--L];
+                while ((ax = this.indexOf(what)) !== -1) {
+                    this.splice(ax, 1);
+                }
+            }
+            return this;
+        };
+    </script>
+
+    <script>
+        var c = document.getElementById("Canvas");
+        var ctx = c.getContext("2d");
+
+        var clickedTables = [];
+
+        var Tafels = [
+            [40, 54, 1],
+            [40, 204, 2],
+            [40, 490, 3],
+            [40, 354, 4],
+            [250, 204, 5],
+            [250, 354, 6],
+            [500, 54, 7],
+            [500, 204, 8],
+            [719, 54, 9],
+            [719, 204, 10]
+        ];
+
+        function drawTable(table, x, y) {
+            table.onload = function () { ctx.drawImage(table, x, y) };
+        }
+
+        @*@for (var i = 0; 0 < Model.Reservering.Count; i++) {
+            clickedTables.push(Model.Reservering);
+        }*@
+
+        function drawMap() {
+
+            ctx.clearRect(0, 0, ctx.width, ctx.height);
+
+             @foreach (var item in Model.Reservering)
+            {
+                <Text>
+            clickedTables.push(@item.Tafel_Nummer);
+                </Text>
+
+
+             }
+
+           
+
+            for (var i = 0; i < Tafels.length; i++) {
+                var tafel = new Image();
+                var x = Tafels[i][0];
+                var y = Tafels[i][1];
+
+                tafel.Id = Tafels[i][2];
+
+                if (contains.call(clickedTables, i)) {
+                    tafel.src = '/Images/Tafel_Z.png';
+                } else {
+                    tafel.src = '/Images/Tafel_0.png';
+                }
+
+                    
+             
+
+               drawTable(tafel, x, y);
+            }
+
+            //console.log(clickedTables);
+
+        }
+
+        c.addEventListener('click',
+            function (event) {
+                var x = event.pageX - c.offsetLeft,
+                    y = event.pageY - c.offsetTop;
+
+
+                for (var i = 0; i < Tafels.length; i++) {
+                    var tx = Tafels[i][0];
+                    var ty = Tafels[i][1];
+                    var table = Tafels[i][3];
+    
+                    if (contains.call(clickedTables, i)) {
+                    }
+                    else {
+                        if (x >= tx && x <= tx + 180 && y >= ty && y <= ty + 100) {
+
+
+
+                            if (clickedTables.length) {
+                                clickedTables = [];
+                            }
+
+                            if (!contains.call(clickedTables, i)) {
+                                clickedTables.push(i);
+                                var textbox = document.getElementById("Tafel_Nummer");
+                                textbox.value = clickedTables;
+                                console.log(textbox.value);
+                            }
+                            else {
+                                clickedTables.remove(i);
+                            }
+
+                            drawMap();
+                        }
+                    }
+
+                }
+
+
+            });
+
+            drawMap();
+
+
+    </script>
+        }
+
+
+    }
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+       
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <input type="hidden" name="Tafel_Nummer" id="Tafel_Nummer" />
+
+            @*@Html.EditorFor(model => model.Tafel_Nummer)*@
+
+     
+            <div class="form-group">
+                @Html.LabelFor(model => model.Personen, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Personen, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Personen, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-2">
+                    <input type="submit" id="" class="btn btn-default" value="Update" />
+                </div>
+            </div>
+           
+            @for (int i = 0; i < Model.Personen; i++)
+            {
+                <div class="form-group">
+                    <label class="control-label col-md-2">Menu:</label>
+                    <div class="col-md-10">
+                        @*@Html.DropDownListFor(model => model.MenuId, Model.MenusList, "Selecteer een Menu", new { @class = "form-control" })*@
+                        @Html.DropDownList("Menu" + i, Model.Menus, new { @class = "form-control" })
+                        @*@Html.ValidationMessageFor(model => model.MenuId, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+            }
+                   @if (Model.Personen == 0)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Datum, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Datum, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Tijd, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Tijd, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Tijd, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+                          @if (Model.Personen > 0)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Datum, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Datum, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Datum, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Tijd, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Tijd, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Tijd, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+            
+            }
+ 
+            @if (Model.Personen > 0)
+            {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-1">
+                    <input type="submit" name="submit" value="Create" class="btn btn-default" />
+                 
+                </div>
+                <div class="col-md-3">
+                    <input type="submit" name="submit" value="Pas datum en tijd aan" class="btn btn-default" />
+                </div>
+            </div>
+            }
+        </div>
+    }
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

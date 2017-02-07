@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Kippenbout.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "klantBeheer";
+}
+
+<h2>klantBeheer</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+         Naam
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TelefoonNummer)
+        </th>
+        <th>
+            Adress
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Postcode)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Voornaam) @Html.DisplayFor(modelItem => item.Tussenvoegsel) @Html.DisplayFor(modelItem => item.Achternaam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TelefoonNummer)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StraatNaam) @Html.DisplayFor(modelItem => item.Huisnummer)@Html.DisplayFor(modelItem => item.Toevoegsel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Postcode)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        
+        <a href="@Url.Action("ExportToExcel", "Manage")" class="btn">
+         <span class="download fa fa-download"></span>
+        </a>
+        @*<button class="btn btn-default kleurtje">
+            @Html.ActionLink("Klik hier om een dataexport te maken naar Excel", "ExportToExcel")
+        </button>*@
+
+    </p>
+}

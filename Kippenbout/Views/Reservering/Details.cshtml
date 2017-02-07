@@ -1,0 +1,91 @@
+﻿@model Kippenbout.Models.Reservering
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<script>
+            printDivCSS = new String('<link href="myprintstyle.css" rel="stylesheet" type="text/css">')
+            function printDiv(divId) {
+                window.frames["print_frame"].document.body.innerHTML=printDivCSS + document.getElementById(divId).innerHTML;
+                window.frames["print_frame"].window.focus();
+                window.frames["print_frame"].window.print();
+            }
+</script>
+
+<h2>Details</h2>
+    
+<div>
+
+    
+    
+    <div id="div1">
+
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Naam
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Contact_Naam)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MenusList)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MenusList[0].Naam)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Personen)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Personen)
+            </dd>
+
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Datum)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Datum)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Prijs)
+            </dt>
+
+            <dd>
+                &euro; @Html.DisplayFor(model => model.Prijs)
+            </dd>
+
+            <dt>
+                Totaal prijs
+            </dt>
+
+            <dd>
+                &euro; @Html.DisplayFor(model => model.Totaal_Prijs)
+            </dd>
+
+        </dl>
+    </div>
+    <iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
+</div>
+<p>
+@if (User.IsInRole("Admin,Medewerker"))
+{
+    <button class="btn btn-default kleurtje">
+        <a href="javascript:printDiv('div1')">Klik hier om de rekening uit te printen</a>
+    </button>
+}
+</p>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
